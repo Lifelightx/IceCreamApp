@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="relative px-4">
+    <!-- Background Image -->
+    <img src="https://plus.unsplash.com/premium_photo-1713987665771-0707f06c0169?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Beautiful Image" class="h-[450px] object-cover rounded-lg w-full">
+
+    <!-- Overlay with centered text -->
+    <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-center text-white bg-black/30 px-8 py-6 rounded-lg max-w-3xl mx-auto">
+            <h2 class="text-7xl md:text-5xl font-lobster font-bold">
+                Welcome
+            </h2>
+            <p class="text-lg md:text-xl mt-4 font-poppins font-medium">
+                Here you will get every type of Delicious Ice creams, Milkshakes, and frozen desserts.
+            </p>
+            <a href="/menu"
+                class="mt-6 inline-block px-6 py-2 bg-gradient-to-br from-red-500 to-orange-400 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all">
+                Explore Menu
+            </a>
+        </div>
+    </div>
+</div>
+<hr class="mt-2">
+<div class="flex flex-col lg:flex-row justify-center items-center gap-10 px-6 h-auto lg:h-[40rem] py-10">
+    <div class="lg:w-[400px]">
+        <img src="https://img.freepik.com/free-vector/colorful-ice-cream-cone-hand_1308-176426.jpg?t=st=1736172217~exp=1736175817~hmac=c062e1e6349f1536ba2a37710768fd0d616b76015dfcf2791848ab139c4e9a71&w=740"
+            class="h-[380px] transform rotate-[-30deg] w-full" alt="">
+    </div>
+    <div class="flex flex-col items-center text-center lg:text-left px-7">
+        <h1 class="text-4xl sm:text-3xl md:text-4xl">
+            <span class="text-orange-700 text-8xl">Never</span> Loose <br>
+            the <span class="text-green-400 text-8xl">Child</span> inside <span
+                class="font-bold text-6xl text-indigo-500">You</span>
+        </h1>
+        <p class="text-lg sm:text-base mt-4">We are here to recall your childhood memories with the delicious taste. </p>
+    </div>
+</div>
+<div class="flex flex-col lg:flex-row justify-around items-center h-auto w-full gap-12 px-8 lg:px-20 py-16 bg-red-50">
+    <!-- Text Block -->
+    <div class="text-center lg:text-left max-w-[450px]">
+        <h2 class="text-red-500 text-3xl font-bold mb-4">
+            Taking Ice creams to <br> new <span class="text-slate-600 text-4xl">Heights</span>
+        </h2>
+        <p class="text-red-500 text-lg leading-relaxed">
+            We started as a small local ice cream shop, with a passion for creating unique and flavorful ice creams
+            using the finest ingredients. Over the years, we've expanded to bring these mouthwatering treats to ice
+            cream lovers all around.
+        </p>
+        <button class="bg-orange-500 mt-2 px-4 py-2 text-white rounded-full"><a href="/about">Learn More</a></button>
+    </div>
+
+    <!-- Image and Supporting Text Block -->
+    <div class="flex flex-col items-center text-center lg:text-left">
+        <img src="../static/download.png" alt="Ice Cream Flavors" class="w-[300px] lg:w-[450px] mb-6">
+        <h3 class="text-orange-500 text-2xl font-bold mb-2">
+            Endless Flavors
+        </h3>
+        <p class="text-red-500 text-lg leading-relaxed">
+            From classic vanilla to exotic flavors, we have something for everyone.
+        </p>
+    </div>
+</div>
+<div class="bg-white py-10">
+    <h2 class="text-center text-4xl font-bold text-red-500 mb-8">Ice Cream <span class="text-slate-600">Variants</span>
+    </h2>
+
+    <div class="flex flex-wrap justify-center gap-6 lg:gap-8 px-4">
+        <!-- Card 1 -->
+        <div
+            class="bg-gradient-to-br from-red-100 via-orange-50 to-white rounded-lg shadow-lg p-6 w-64 text-center transition-transform hover:scale-105">
+            <img src="https://img.freepik.com/premium-vector/dessert-muffin-sweet-icon_24877-4165.jpg?w=740"
+                alt="Vanilla Ice Cream" class="w-32 h-32 rounded-full mx-auto mb-4">
+            <h3 class="text-lg font-semibold text-orange-600 mb-2">Vanilla Delight</h3>
+            <p class="text-gray-700 text-sm">Classic vanilla ice cream with a creamy and rich texture.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+            class="bg-gradient-to-br from-red-100 via-orange-50 to-white rounded-lg shadow-lg p-6 w-64 text-center transition-transform hover:scale-105">
+            <img src="https://img.freepik.com/free-vector/realistic-monster-shake-background_52683-41592.jpg?t=st=1736229798~exp=1736233398~hmac=f5cf3fa14fdf317964f3e606a6d9a391adf836d780591651e9833f25c2fa29ed&w=740"
+                alt="Chocolate Ice Cream" class="w-32 h-32 rounded-full mx-auto mb-4">
+            <h3 class="text-lg font-semibold text-orange-600 mb-2">Chocolate Heaven</h3>
+            <p class="text-gray-700 text-sm">Decadent chocolate ice cream made for chocolate lovers.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+            class="bg-gradient-to-br from-red-100 via-orange-50 to-white rounded-lg shadow-lg p-6 w-64 text-center transition-transform hover:scale-105">
+            <img src="https://img.freepik.com/premium-vector/ice-cream-with-strawberries-glass-bowl_202271-2034.jpg?w=740"
+                alt="Strawberry Ice Cream" class="w-32 h-32 rounded-full mx-auto mb-4">
+            <h3 class="text-lg font-semibold text-orange-600 mb-2">Strawberry Bliss</h3>
+            <p class="text-gray-700 text-sm">Sweet and fruity strawberry ice cream for a refreshing treat.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div
+            class="bg-gradient-to-br from-red-100 via-orange-50 to-white rounded-lg shadow-lg p-6 w-64 text-center transition-transform hover:scale-105">
+            <img src="https://img.freepik.com/free-vector/realistic-green-tea-ice-cream-with-stamp-frame_1284-30564.jpg?t=st=1736229913~exp=1736233513~hmac=830a8af4bb22bfb9c237db9843cd00dd39f31c9de0d47c31bb9a0050ada90bf8&w=826"
+                alt="Mint Ice Cream" class="w-32 h-32 rounded-full mx-auto mb-4">
+            <h3 class="text-lg font-semibold text-orange-600 mb-2">Mint Magic</h3>
+            <p class="text-gray-700 text-sm">Cool and creamy mint ice cream with chocolate chips.</p>
+        </div>
+    </div>
+</div>
+
+<div class="flex flex-col lg:flex-row px-6 justify-center lg:space-x-10 items-center h-auto lg:h-[40rem] py-10 ">
+    <!-- Text Section -->
+    <div class="text-center lg:text-left space-y-6 lg:space-y-8 max-w-md">
+      <h2 class="text-4xl sm:text-3xl font-bold text-red-600">Why Choose Our Ice Creams</h2>
+      <p class="text-gray-700 text-lg sm:text-base lg:text-lg">
+        We bring you a delightful ice cream experience crafted with passion, innovation, and quality ingredients.
+      </p>
+  
+      <!-- Features -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-4 transform hover:rotate-6 transition-transform duration-300">
+          <img src="https://img.freepik.com/premium-vector/ice-cream-logo-emblem_9845-103.jpg?w=740" alt="Modern Innovation" class="w-12 rounded-full h-12">
+          <h3 class="text-xl sm:text-lg font-semibold text-orange-600">Modern Innovation</h3>
+        </div>
+  
+        <div class="flex items-center space-x-4 transform hover:rotate-6 transition-transform duration-300">
+          <img src="https://img.freepik.com/free-vector/graduation-cap-icon_24911-115173.jpg?t=st=1736231835~exp=1736235435~hmac=4c98e64ecc983f2b1dce862e9059da41d4610b44088085bd108b45e70b88facb&w=826" alt="Passionate Approach" class="w-12 rounded-full h-12">
+          <h3 class="text-xl sm:text-lg font-semibold text-orange-600">Passionate Approach</h3>
+        </div>
+  
+        <div class="flex items-center space-x-4 transform hover:rotate-6 transition-transform duration-300">
+          <img src="https://img.freepik.com/free-vector/pure-natural-organic-label-sticker_1017-26205.jpg?t=st=1736231931~exp=1736235531~hmac=66122178b1060f8a297b36cda13a92df2e7372876e50b0d927b2d86fbdb1f49d&w=740" alt="Organic Products" class="w-12 rounded-full h-12">
+          <h3 class="text-xl sm:text-lg font-semibold text-orange-600">Organic Products</h3>
+        </div>
+      </div>
+    </div>
+    <!-- Image Section (Optional) -->
+    <div class="lg:w-[400px] flex justify-center mt-6 lg:mt-0">
+      <img src="https://img.freepik.com/free-vector/delicious-mint-ice-cream-cone-treat_1308-167227.jpg?t=st=1736232048~exp=1736235648~hmac=e675a2c4a385dd20392cc5c6cad1fd08c4edbc13d00b482fd7ac1439c1bcb093&w=360" alt="Ice Cream" class="w-40 transform rotate-[15deg] object-cover">
+    </div>
+  </div>
+  
+{% endblock %}

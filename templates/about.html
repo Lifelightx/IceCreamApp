@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="bg-gray-50 py-16">
+  <div class="max-w-screen-xl mx-auto px-6 text-center">
+    <!-- About Us Section -->
+    <h1 class="text-4xl font-extrabold text-blue-500 mb-4">About Us</h1>
+    <p class="text-lg text-gray-700 mb-8">
+      Welcome to Glacier Goodness, where we craft delicious, creamy, and dreamy ice creams to delight your taste buds. Our mission is to bring joy and happiness with every scoop.
+    </p>
+    
+    <!-- Our Story Section -->
+    <div class="mb-16">
+      <h2 class="text-3xl font-semibold text-gray-800 mb-4">Our Story</h2>
+      <p class="text-lg text-gray-600 leading-relaxed">
+        We started as a small local ice cream shop, with a passion for creating unique and flavorful ice creams using the finest ingredients. Over the years, we've expanded to bring these mouthwatering treats to ice cream lovers all around.
+      </p>
+    </div>
+
+    <!-- Our Ice Creams Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+      <div class="text-center">
+        <img src="https://via.placeholder.com/500" alt="Ice Cream Flavors" class="rounded-xl shadow-lg mb-4">
+        <h3 class="text-2xl font-semibold text-gray-800">Endless Flavors</h3>
+        <p class="text-lg text-gray-600">From classic vanilla to exotic flavors, we have something for everyone.</p>
+      </div>
+      <div class="text-center">
+        <img src="https://via.placeholder.com/500" alt="Milkshake" class="rounded-xl shadow-lg mb-4">
+        <h3 class="text-2xl font-semibold text-gray-800">Milkshakes & More</h3>
+        <p class="text-lg text-gray-600">Not just ice cream! Treat yourself to a variety of creamy milkshakes and frozen desserts.</p>
+      </div>
+    </div>
+
+    <!-- Call to Action Section -->
+    <div class="bg-blue-500 text-white p-8 rounded-lg shadow-lg">
+      <h3 class="text-2xl font-semibold mb-4">Join Us for a Sweet Treat!</h3>
+      <p class="text-lg mb-6">Come visit us at Glacier Goodness and enjoy the best ice cream in town. We can't wait to serve you!</p>
+      <a href="/contact" class="bg-white text-blue-500 font-bold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
