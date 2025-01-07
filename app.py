@@ -14,11 +14,12 @@ app = Flask(__name__)
 app.secret_key = 'MysecretKyeisNotdefinedSO5nb'
 
 def db_connect():
-    return MySQLdb.connect(host='localhost', user='root',database='newyeardb', password='Jeeban@12345',)
+    
+    return MySQLdb.connect(host='sql12.freesqldatabase.com', user='sql12756218',database='sql12756218', password='iBYTMrg9Jc')
 
 @app.route('/')
 def home():
-    if 'email'  in session:
+    if 'email' and 'name' in session:
         user = {"email": session['email'], "name": session['name']}
         return render_template('index.html',user=user)
     return render_template('index.html',user=None)
@@ -72,19 +73,22 @@ def request_otp():
     return render_template('reqotp.html')      
 @app.route('/verify_otp', methods=['POST'])
 def verify_otp():
-    
     if request.method == "POST":
         user_otp = request.form['otp']
+        print(user_otp)
         if user_otp == str(session['otp']):
+            print("Matched........")
             session.pop('otp')
             session['user_otp'] = user_otp
             return redirect('/signup')
         return redirect('/request_otp')
+    return "Sorry, you are not allowed to"
     
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    if 'user_otp' or 'email' not in session:
+    
+    if 'email' not in session or 'user_otp' not in session:
         return redirect('/')
     if request.method == 'POST':
         name = request.form['name']
@@ -104,7 +108,6 @@ def signup():
             flash("Error while signing up", 'danger')
             return f"{e}"
         finally:
-            cursor.close()
             conn.close()
     return render_template('signup.html',email = session['email'])
 
@@ -113,8 +116,8 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
+        conn = db_connect()
         try:
-            conn = db_connect()
             cursor = conn.cursor()
             querry = "select * from users where email=%s"
             cursor.execute(querry, (email,))
@@ -129,7 +132,6 @@ def login():
             flash("Error while login", 'danger')
             return f"{e}"
         finally:
-            cursor.close()
             conn.close()
     return render_template('login.html')
 @app.route('/logout')
