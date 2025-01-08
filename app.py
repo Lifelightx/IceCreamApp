@@ -164,14 +164,31 @@ def add_iceCreams():
         cursor = conn.cursor()
         try:
             querry = "insert into ICECREAMS(name,descriptions,category,image_name,price)values(%s,%s,%s,%s,%s)"
-            cursor.execute(querry,(name,desc,category,image_name,price))
+            cursor.execute(querry,(name,desc,category,unique_img_name,price))
             conn.commit()
         except Exception as e:
             flash(f"{e}",'danger')
             conn.rollback()
-            
-        
     return render_template('addPage.html')
+
+@app.route('/menu')
+def menu():
+    if 'email' not in session:
+        return redirect('/')
+    else:
+        conn = db_connect()
+        cursor = conn.cursor()
+        try:
+            querry = "select * from ICECREAMS"
+            cursor.execute(querry)
+            iceCreams = cursor.fetchall()
+        # for i in iceCreams:
+        #     print(i)
+            return render_template('menu.html', iceCreams=iceCreams)
+        except Exception as e:
+            flash(f"{e}",'danger')
+        finally:
+            conn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="flex gap-10 py-4 px-16 flex-wrap justify-center items-center">
+    {% for icecream in iceCreams %}
+    <div class="w-64 h-96 rounded-lg border-1 shadow-lg border-slate-200 overflow-hidden bg-gradient-to-br from-red-100 via-orange-50 to-white p-4 flex flex-col items-center">
+        <!-- Image -->
+        <img src="../static/uploads/{{icecream[4]}}" 
+             alt="{{icecream[4]}}" 
+             class="w-full h-40 object-cover rounded-lg my-2">
+        
+        <!-- Name -->
+        <h2 class="text-xl font-bold text-red-700 mb-2">{{icecream[1]}}</h2>
+        
+        <!-- Price -->
+        <p class="text-lg font-semibold text-blue-600 mb-2">{{icecream[5]}}</p>
+        
+        <!-- Description -->
+        <p class="text-sm text-gray-700 text-center mb-4">
+          {{icecream[2]}}
+        </p>
+        
+        <!-- Add to Cart Button -->
+        <button class="bg-gradient-to-br from-indigo-500 to-blue-300 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+            <i class="fa fa-shopping-cart" style="color:white;"></i> Add to Cart
+        </button>
+      </div>
+      
+    {% endfor %}
+</div>
+{% endblock %}
