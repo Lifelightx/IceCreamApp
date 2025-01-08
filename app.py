@@ -29,7 +29,10 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    if 'email' and 'name' in session:
+        user = {"email": session['email'], "name": session['name']}
+        return render_template('about.html',user=user)
+    return render_template('about.html', user=None)
 @app.route('/services')
 def services():
     return render_template('services.html')
