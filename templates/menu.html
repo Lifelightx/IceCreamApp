@@ -20,11 +20,29 @@
         </p>
         
         <!-- Add to Cart Button -->
-        <button class="bg-gradient-to-br from-indigo-500 to-blue-300 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+        <button onClick="addToCart({{icecream[0]}})" class="bg-gradient-to-br from-indigo-500 to-blue-300 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
             <i class="fa fa-shopping-cart" style="color:white;"></i> Add to Cart
         </button>
       </div>
       
     {% endfor %}
 </div>
+<script>
+    function addToCart(id) {
+        console.log(id);
+        fetch('http://127.0.0.1:5000/addToCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id
+            })
+            
+        })
+        .then(res=>res.json())
+        .then(data=>alert(data.message))
+        
+    }
+</script>
 {% endblock %}

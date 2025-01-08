@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,url_for,session,redirect,flash
+from flask import Flask,render_template,request,url_for,session,redirect,flash,jsonify
 import random
 import smtplib
 from email.mime.text import MIMEText
@@ -189,6 +189,13 @@ def menu():
             flash(f"{e}",'danger')
         finally:
             conn.close()
+@app.route('/addToCart', methods=['POST'])
+def addToCart():
+    data = request.json
+    id = data.get('id')
+    cart = session.get('cart', [])
+    cart.append(id)
+    return jsonify({"message":"Item added successfully"})
 
 if __name__ == '__main__':
     app.run(debug=True)
