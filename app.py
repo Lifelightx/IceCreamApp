@@ -14,7 +14,6 @@ app = Flask(__name__)
 app.secret_key = 'MysecretKyeisNotdefinedSO5nb'
 
 def db_connect():
-    
     return MySQLdb.connect(host='sql12.freesqldatabase.com', user='sql12756218',database='sql12756218', password='iBYTMrg9Jc')
 
 @app.route('/')
