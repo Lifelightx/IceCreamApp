@@ -4,13 +4,17 @@ import smtplib
 from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
+from werkzeug.utils import secure_filename
 import MySQLdb
+import time
 from werkzeug.security import generate_password_hash,check_password_hash
 
 load_dotenv()
 
 app = Flask(__name__)
 
+app.config["UPLOAD_FOLDER"] = os.path.join(os.getcwd(),'static','uploads')
+app.config["MAX_CONTENT_LENGTH"] =  1024 * 1024*4;
 app.secret_key = 'MysecretKyeisNotdefinedSO5nb'
 
 def db_connect():
@@ -140,6 +144,31 @@ def logout():
     session.pop('name', None)
     return redirect('/')     
     
+@app.route('/add', methods=['POST', 'GET'])
+def add_iceCreams():
+    if request.method == 'POST':
+        name = request.form['name']
+        price = int(request.form['price'])
+        category = request.form['category']
+        desc = request.form['description']
+        image = request.files['image']
+        
+        image_name = secure_filename(image.filename)
+        unique_img_name = f"{time.time()}_{image_name}"
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'],unique_img_name)
+        image.save(image_path)
+        conn = db_connect()
+        cursor = conn.cursor()
+        try:
+            querry = "insert into ICECREAMS(name,descriptions,category,image_name,price)values(%s,%s,%s,%s,%s)"
+            cursor.execute(querry,(name,desc,category,image_name,price))
+            conn.commit()
+        except Exception as e:
+            flash(f"{e}",'danger')
+            conn.rollback()
+            
+        
+    return render_template('addPage.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
