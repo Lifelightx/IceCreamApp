@@ -81,9 +81,9 @@ def request_otp():
 def verify_otp():
     if request.method == "POST":
         user_otp = request.form['otp']
-        print(user_otp)
+        # print(user_otp)
         if user_otp == str(session['otp']):
-            print("Matched........")
+            # print("Matched........")
             session.pop('otp')
             session['user_otp'] = user_otp
             return redirect('/signup')
