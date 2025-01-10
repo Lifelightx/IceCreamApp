@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mx-auto mt-10">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Profile</h1>
+
+    <form method="POST" action="/profile" class="max-w-md mx-auto bg-white shadow-md rounded-lg p-6">
+        <!-- Flash Messages -->
+        <!-- Name -->
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" name="name" id="name" value="{{ user.name }}" required
+                class="mt-1 block w-full border-b-2 border-gray-300 rounded-md shadow-sm p-2">
+        </div>
+
+        <!-- Email -->
+        <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" id="email" value="{{ user.email }}" required
+                class="mt-1 block w-full border-b-2 border-gray-300 rounded-md shadow-sm p-2">
+        </div>
+
+        <!-- Password -->
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">New Password (optional)</label>
+            <input type="password" name="password" id="password"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-4">
+            <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm New Password</label>
+            <input type="password" name="confirm_password" id="confirm_password"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+            <input type="submit"
+                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg shadow-md"
+                value = 'Update Profile'
+            >
+        </div>
+    </form>
+</div>
+{% endblock %}

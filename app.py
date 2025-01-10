@@ -35,7 +35,10 @@ def about():
     return render_template('about.html', user=None)
 @app.route('/services')
 def services():
-    return render_template('services.html')
+    if 'email' and 'name' in session:
+        user = {"email": session['email'], "name": session['name']}
+        return render_template('services.html',user=user)
+    return render_template('services.html', user=None)
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
@@ -128,6 +131,10 @@ def login():
             querry = "select * from users where email=%s"
             cursor.execute(querry, (email,))
             user = cursor.fetchone()
+            if user[2] == 'jeebanjyotimallik14@outlook.com':
+                session['Admin_email'] = user[2]
+                
+                return redirect('/admin')
             if user and check_password_hash(user[3], password):
                 session['email'] = user[2]
                 session['name'] = user[1]
@@ -147,7 +154,7 @@ def logout():
     session.pop('name', None)
     return redirect('/')     
     
-@app.route('/add', methods=['POST', 'GET'])
+@app.route('/add', methods=['POST'])
 def add_iceCreams():
     if request.method == 'POST':
         name = request.form['name']
@@ -166,10 +173,11 @@ def add_iceCreams():
             querry = "insert into ICECREAMS(name,descriptions,category,image_name,price)values(%s,%s,%s,%s,%s)"
             cursor.execute(querry,(name,desc,category,unique_img_name,price))
             conn.commit()
+            return redirect('/admin')
         except Exception as e:
             flash(f"{e}",'danger')
             conn.rollback()
-    return render_template('addPage.html')
+    
 
 @app.route('/menu')
 def menu():
@@ -182,13 +190,16 @@ def menu():
             querry = "select * from ICECREAMS"
             cursor.execute(querry)
             iceCreams = cursor.fetchall()
+            print(iceCreams)
         # for i in iceCreams:
         #     print(i)
             return render_template('menu.html', iceCreams=iceCreams)
         except Exception as e:
             flash(f"{e}",'danger')
+            return render_template('menu.html', iceCreams=[])
         finally:
             conn.close()
+        
 @app.route('/addToCart', methods=['POST'])
 def addToCart():
     data = request.json
@@ -209,6 +220,7 @@ def addToCart():
         conn.commit()
     except Exception as e:
         conn.rollback()
+        print(e)
         return jsonify({"message":"Item does not added","error":f"{e}", "status":"error"})
     return jsonify({"message":"Item added successfully", "status":"success"})
 
@@ -247,8 +259,60 @@ def remove_Item():
     cursor.close()
     conn.close()
     return redirect('/view_cart')
-    
 
+@app.route('/admin')
+
+def admin():
+    if 'Admin_email' in session:
+        if 'jeebanjyotimallik14@outlook.com' == session['Admin_email']:
+            return render_template('addPage.html', user=session.get('Admin_email'))
+    return redirect('/')
+        
+@app.route('/adminLogout')
+def adminLogout():
+    session.pop('Admin_email', None)
+    return redirect('/')
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == 'POST':
+        update_email = request.form.get('email')
+        update_name = request.form.get('name')
+        update_password = request.form.get('password')
+        update_confirm_password = request.form.get('confirm_password')
+
+        conn = db_connect()  # Create database connection
+        cursor = conn.cursor()
+        try:
+            if update_password:  # Check if the user wants to update the password
+                if update_password == update_confirm_password:
+                    hashed_password = generate_password_hash(update_password)
+                    query = "UPDATE users SET name = %s, email = %s, password = %s WHERE email = %s"
+                    cursor.execute(query, (update_name, update_email, hashed_password, session.get('email')))
+                else:
+                    flash("Passwords do not match.", 'danger')
+                    return redirect('/profile')  # Redirect in case of a password mismatch
+            else:
+                # Update only name and email if password is not provided
+                query = "UPDATE users SET name = %s, email = %s WHERE email = %s"
+                cursor.execute(query, (update_name, update_email, session.get('email')))
+            
+            conn.commit()  # Save changes to the database
+            
+            # Update session data with the new values
+            session['name'] = update_name
+            session['email'] = update_email
+            
+            flash("Profile updated successfully!", 'success')
+        except Exception as e:
+            conn.rollback()  # Rollback in case of error
+            flash(f"Error while updating profile: {e}", 'danger')
+        finally:
+            conn.close()
+    
+    # Always return the profile page, regardless of method
+    user = {"email": session.get('email'), "name": session.get('name')}
+    return render_template('profile.html', user=user)
 
 
 if __name__ == '__main__':

@@ -32,7 +32,7 @@
     {% endfor %}
 </div>
 <script>
-    function addToCart(id,name,url,price) {
+    function addToCart(id, name, url, price) {
         fetch('/addToCart', {
             method: 'POST',
             headers: {
@@ -44,32 +44,36 @@
                 url: url,
                 price: price
             })
-            
         })
-        .then(res=>res.json())
+        .then(res => res.json())
         .then((data) => {
-            console.log("heelo: ",data)
+            console.log("Response: ", data);
             const flashMessages = document.getElementById('flash-messages');
-            const msg = document.getElementById('msg')
             const newFlash = document.createElement('div');
-            newFlash.className = `mb-4 px-6 py-2 rounded-lg border-b-4 border-slate-300 text-white font-medium ${
+            
+            newFlash.className = `flash-message mb-4 px-6 py-2 rounded-lg border-b-4 text-white font-medium ${
                 data.status === 'success'
-                    ? 'bg-green-500'
+                    ? 'bg-green-500 border-green-700'
                     : data.status === 'warning'
-                    ? 'bg-yellow-500'
-                    : 'bg-red-500'
+                    ? 'bg-yellow-500 border-yellow-700'
+                    : 'bg-red-500 border-red-700'
             }`;
-            if (data.status == 'success'){
-                newFlash.innerHTML = `<i class="fa fa-check" style="font-size:24px"></i> ${data.message}`;
-            }
-            if(data.status =='warning'){
-                newFlash.innerHTML = `<i class="fa fa-warning" style="font-size:24px"></i> ${data.message}`
-            }
+            
+            newFlash.innerHTML = data.status === 'success'
+                ? `<i class="fa fa-check" style="font-size:24px"></i> ${data.message}`
+                : `<i class="fa fa-warning" style="font-size:24px"></i> ${data.message}`;
+            
             flashMessages.appendChild(newFlash);
+    
+            // Slide-out after 5 seconds
             setTimeout(() => {
-                newFlash.style.display = 'none';
-            }, 5000);
-        })   
+                newFlash.classList.add('out'); // Trigger the slide-out animation
+                setTimeout(() => {
+                    newFlash.remove(); // Remove the element after the animation
+                }, 500); // Match the duration of slide-out animation
+            }, 5000); // Wait 5 seconds before starting the slide-out
+        });
     }
+    
 </script>
 {% endblock %}

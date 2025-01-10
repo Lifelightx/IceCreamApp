@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Ice Cream App</title>
   <!-- tailwind cdn -->  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -15,7 +15,43 @@
     body {
       font-family: 'Montserrat', sans-serif;
     }
+
   </style>
+  <style>
+    /* Slide-in animation */
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  
+    /* Slide-out animation */
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+  
+    /* Flash message styles */
+    .flash-message {
+      animation: slideIn 0.5s ease-out; /* Entry animation */
+    }
+  
+    .flash-message.out {
+      animation: slideOut 0.5s ease-out; /* Exit animation */
+    }
+  </style>
+  
 </head>
 
 <body>
@@ -55,7 +91,8 @@
 
           
           <div id="userMenuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
-              <a href="/view_cart" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cart</a>
+              <a href="/view_cart" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100">Cart</a>
+              <a href="/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-100">Profile</a>
               <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-800 hover:rounded-lg hover:text-white">Log Out</a>
           </div>
       </div>

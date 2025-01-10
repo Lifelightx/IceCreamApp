@@ -1,7 +1,8 @@
-{% extends "base.html" %}
+{% extends "adminbase.html" %}
 {% block content %}
 
 <div class="container mx-auto p-6">
+    <h1 class="text-2xl text-center mb-3 text-gray-800">Add New Ice Cream</h1>
     <form 
         action="/add" 
         method="POST" 
@@ -9,8 +10,8 @@
         class="max-w-lg mx-auto bg-white shadow-md rounded-lg p-8"
     >
         <!-- Ice Cream Name -->
-        <div class="mb-4">
-            <label for="name" class="block text-gray-700 font-medium mb-2">Name:</label>
+        <div class="mb-2">
+            <label for="name" class="block text-gray-700 font-medium mb-1">Name:</label>
             <input 
                 type="text" 
                 id="name" 
@@ -20,8 +21,8 @@
                 placeholder="Enter ice cream name"
             >
         </div>
-        <div class="mb-4">
-            <label for="price" class="block text-gray-700 font-medium mb-2">Price:</label>
+        <div class="mb-2">
+            <label for="price" class="block text-gray-700 font-medium mb-1">Price:</label>
             <input 
                 type="text" 
                 id="price" 
@@ -33,8 +34,8 @@
         </div>
 
         <!-- Description -->
-        <div class="mb-4">
-            <label for="description" class="block text-gray-700 font-medium mb-2">Description:</label>
+        <div class="mb-2">
+            <label for="description" class="block text-gray-700 font-medium mb-1">Description:</label>
             <textarea 
                 id="description" 
                 name="description" 
