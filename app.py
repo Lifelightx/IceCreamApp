@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,url_for,session,redirect,flash,jsonify
+from flask import Flask,render_template,request,url_for,session,redirect,flash,jsonify,json
 import random
 import smtplib
 from email.mime.text import MIMEText
@@ -192,10 +192,64 @@ def menu():
 @app.route('/addToCart', methods=['POST'])
 def addToCart():
     data = request.json
-    id = data.get('id')
-    cart = session.get('cart', [])
-    cart.append(id)
-    return jsonify({"message":"Item added successfully"})
+    querry = "select * from users where email = %s"
+    conn = db_connect()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(querry,(session.get('email'),))
+        row = cursor.fetchone()
+        cart = json.loads(row[4]) if row[4] else []
+        if data not in cart:
+            cart.append(data)
+        else:
+            return jsonify({"message":"Item Alread in cart.","status":"warning"})
+        updated_cart = json.dumps(cart)
+        updateQuerry = "update users set cart = %s where email=%s "
+        cursor.execute(updateQuerry,(updated_cart,session.get('email')))
+        conn.commit()
+    except Exception as e:
+        conn.rollback()
+        return jsonify({"message":"Item does not added","error":f"{e}", "status":"error"})
+    return jsonify({"message":"Item added successfully", "status":"success"})
+
+@app.route('/view_cart')
+def view_cart():
+    conn = db_connect()
+    cursor = conn.cursor()
+    querry = "select cart from users where email = %s"
+    cursor.execute(querry,(session.get('email'),))
+    row = cursor.fetchone()
+    cart = json.loads(row[0]) if row[0] else []  
+    total_sum = sum(float(item['price']) for item in cart)        
+    return render_template('cart.html', cart=cart,total_sum=total_sum) 
+
+@app.route('/remove_item')
+def remove_Item():
+    id = request.args.get('id')
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    # Fetch the current cart for the user
+    query = "SELECT cart FROM users WHERE email = %s"
+    cursor.execute(query, (session.get('email'),))
+    row = cursor.fetchone()
+
+    # Load the cart and remove the item
+    cart = json.loads(row[0]) if row[0] else []
+    updated_cart = [item for item in cart if item.get('id') != id]
+
+    # Save the updated cart back to the database
+    query = "UPDATE users SET cart = %s WHERE email = %s"
+    cursor.execute(query, (json.dumps(updated_cart), session.get('email')))
+    conn.commit()
+
+    # Close connection
+    cursor.close()
+    conn.close()
+    return redirect('/view_cart')
+    
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

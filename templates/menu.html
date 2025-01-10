@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="flex gap-10 py-4 px-16 flex-wrap justify-center items-center">
+    <div id="flash-messages" class="fixed top-16 right-6 z-200 space-y-2">
+        <span id="msg"></span>
+    </div>
     {% for icecream in iceCreams %}
     <div class="w-64 h-96 rounded-lg border-1 shadow-lg border-slate-200 overflow-hidden bg-gradient-to-br from-red-100 via-orange-50 to-white p-4 flex flex-col items-center">
         <!-- Image -->
@@ -20,7 +24,7 @@
         </p>
         
         <!-- Add to Cart Button -->
-        <button onClick="addToCart({{icecream[0]}})" class="bg-gradient-to-br from-indigo-500 to-blue-300 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
+        <button onClick="addToCart('{{icecream[0]}}','{{icecream[1]}}','{{icecream[4]}}','{{icecream[5]}}')" class="bg-gradient-to-br from-indigo-500 to-blue-300 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
             <i class="fa fa-shopping-cart" style="color:white;"></i> Add to Cart
         </button>
       </div>
@@ -28,21 +32,44 @@
     {% endfor %}
 </div>
 <script>
-    function addToCart(id) {
-        console.log(id);
-        fetch('http://127.0.0.1:5000/addToCart', {
+    function addToCart(id,name,url,price) {
+        fetch('/addToCart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id: id
+                id: id,
+                name: name,
+                url: url,
+                price: price
             })
             
         })
         .then(res=>res.json())
-        .then(data=>alert(data.message))
-        
+        .then((data) => {
+            console.log("heelo: ",data)
+            const flashMessages = document.getElementById('flash-messages');
+            const msg = document.getElementById('msg')
+            const newFlash = document.createElement('div');
+            newFlash.className = `mb-4 px-6 py-2 rounded-lg border-b-4 border-slate-300 text-white font-medium ${
+                data.status === 'success'
+                    ? 'bg-green-500'
+                    : data.status === 'warning'
+                    ? 'bg-yellow-500'
+                    : 'bg-red-500'
+            }`;
+            if (data.status == 'success'){
+                newFlash.innerHTML = `<i class="fa fa-check" style="font-size:24px"></i> ${data.message}`;
+            }
+            if(data.status =='warning'){
+                newFlash.innerHTML = `<i class="fa fa-warning" style="font-size:24px"></i> ${data.message}`
+            }
+            flashMessages.appendChild(newFlash);
+            setTimeout(() => {
+                newFlash.style.display = 'none';
+            }, 5000);
+        })   
     }
 </script>
 {% endblock %}

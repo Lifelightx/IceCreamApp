@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
@@ -40,13 +41,25 @@
       <ul class="hidden md:flex space-x-4 px-4 py-2">
         <li><a href="/" class="hover:text-indigo-500">Home</a></li>
         <li><a href="/services" class="hover:text-indigo-500">Services</a></li>
-        <li><a href="/add" class="hover:text-indigo-500">Add</a></li>
+        <li><a href="/menu" class="hover:text-indigo-500">Menu</a></li>
         <li><a href="/about" class="hover:text-indigo-500">About us</a></li>
       </ul>
 
       <div class="space-x-2 hidden md:flex">
         {% if user is not none %}
-        <a href="/logout" class="text-white px-3 py-2 rounded-xl bg-red-700 hover:text-gray-800">Logout</a>
+        <div class="relative">
+          
+          <button id="userMenuButton" class="text-white focus:outline-none">
+              <img src="../static/userIcon.png" class="h-8 w-8 p-1 bg-slate-300 mr-3 rounded-full " alt="">
+          </button>
+
+          
+          <div id="userMenuDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+              <a href="/view_cart" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Cart</a>
+              <a href="/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-800 hover:rounded-lg hover:text-white">Log Out</a>
+          </div>
+      </div>
+        
         {% else %}
         <a href="/login" class="text-gray-500 mt-[7px] hover:text-orange-700">Login</a>
         <button class="bg-gradient-to-br from-red-500 to-orange-400 px-4 py-2 text-white rounded-full"><a href="/request_otp">Sign up</a></button>
@@ -116,6 +129,19 @@
     // Close the mobile menu when close button is clicked
     closeMenu.addEventListener("click", () => {
       mobileMenu.classList.add("hidden");
+    });
+    const userMenuButton = document.getElementById('userMenuButton');
+    const userMenuDropdown = document.getElementById('userMenuDropdown');
+
+    userMenuButton.addEventListener('click', () => {
+        userMenuDropdown.classList.toggle('hidden');
+    });
+
+    // Close dropdown when clicking outside
+    window.addEventListener('click', (e) => {
+        if (!userMenuButton.contains(e.target) && !userMenuDropdown.contains(e.target)) {
+            userMenuDropdown.classList.add('hidden');
+        }
     });
   </script>
 
